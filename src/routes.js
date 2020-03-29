@@ -1,14 +1,14 @@
-import React from "react";
+import React from "react"
 
-const Wallet = React.lazy(() => import("./views/Wallet/Wallet"));
-const Cards = React.lazy(() => import("./views/Cards/Cards"));
-const Users = React.lazy(() => import("./views/Users/Users"));
-const Classroom = React.lazy(() => import("./views/Classroom"));
-const RequestFlights = React.lazy(() => import("./views/RequestFlights"));
-const RequestHotel = React.lazy(() => import("./views/RequestHotel"));
-const ManageWallet = React.lazy(() => import("./views/ManageWallet"));
-const Referral = React.lazy(() => import("./views/Referral"));
-const ResetPassword = React.lazy(() => import("./views/ResetPassword"));
+const Wallet = React.lazy(() => import("./views/Wallet/Wallet"))
+const Cards = React.lazy(() => import("./views/Cards/Cards"))
+const Users = React.lazy(() => import("./views/Users/Users"))
+const Classroom = React.lazy(() => import("./views/Classroom"))
+const RequestFlights = React.lazy(() => import("./views/RequestFlights"))
+const RequestHotel = React.lazy(() => import("./views/RequestHotel"))
+const ManageWallet = React.lazy(() => import("./views/ManageWallet"))
+const Referral = React.lazy(() => import("./views/Referral"))
+const ResetPassword = React.lazy(() => import("./views/Pages/ResetPassword"))
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -56,6 +56,6 @@ const routes = [
     name: "Users",
     component: Users
   }
-];
+]
 
-export default routes;
+export default routes
