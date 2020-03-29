@@ -34,7 +34,7 @@ function ResetPassword(props) {
     if (isEmail(email)) {
       setEmailInvalid(false)
       axios
-        .post("/api/password-reset/reset_password/", { email })
+        .post("/password-reset/reset_password/", { email })
         .then(resp => {
           setModalText(
             "If you have an account, you should be receiving an email with a link to reset your password shortly."
@@ -83,7 +83,7 @@ function ResetPassword(props) {
                     color="primary"
                     className="px-4 btn-pill float-right"
                   >
-                    Send Verification Email
+                    Reset Password
                   </Button>
                 </Col>
               </Row>
@@ -94,6 +94,7 @@ function ResetPassword(props) {
       <Modal isOpen={modal} toggle={toggle} centered>
         <ModalHeader toggle={toggle}>Password Reset</ModalHeader>
         <ModalBody>{modalText}</ModalBody>
+        <Link to="/login">Back to Login</Link>
       </Modal>
     </>
   )
