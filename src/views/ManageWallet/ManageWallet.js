@@ -65,8 +65,7 @@ function ManageWallet(props) {
     {
       name: "Account Holder",
       selector: "user.first_name",
-      sortable: true,
-      format: row => `${row.type.charAt(0).toUpperCase() + row.type.slice(1)}`
+      sortable: true
     },
     {
       name: "Date Open",

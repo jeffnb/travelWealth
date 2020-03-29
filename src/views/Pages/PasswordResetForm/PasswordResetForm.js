@@ -37,6 +37,13 @@ function ResetPassword(props) {
 
   const toggle = () => setModal(!modal)
 
+  function cleanup(token) {
+    if (token.charAt[token.length - 1] === ".") {
+      return token.slice(0, -1)
+    }
+    return token
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
     let error = false
@@ -56,7 +63,7 @@ function ResetPassword(props) {
     if (!error) {
       axios
         .post("/password-reset/confirm/", {
-          token: props.match.params.token,
+          token: cleanup(props.match.params.token),
           password
         })
         .then(resp => {
