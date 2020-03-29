@@ -55,7 +55,7 @@ function ResetPassword(props) {
 
     if (!error) {
       axios
-        .post("/api/password-reset/confirm/", {
+        .post("/password-reset/confirm/", {
           token: props.match.params.token,
           password
         })
