@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from "react";
-import DataTable from "react-data-table-component";
-import { useAdminCards } from "../../hooks";
+import React, { useState } from "react"
+import DataTable from "react-data-table-component"
+import { useAdminCards } from "../../hooks"
 import {
   Button,
   Modal,
@@ -11,19 +11,18 @@ import {
   Col,
   Form,
   Label
-} from "reactstrap";
+} from "reactstrap"
 
 function Cards(props) {
-  const { adminCards } = useAdminCards();
-  const [pending, setPending] = React.useState(true);
-  const [singleCard, setSingleCard] = useState("");
-  const [modal2, setModal2] = useState(false);
-  const [modal, setModal] = useState(false);
-  const data2 = adminCards;
-  const [filterText, setFilterText] = React.useState("");
-  const { deleteCards, editCards } = useAdminCards();
+  const { adminCards } = useAdminCards()
+  const [pending, setPending] = useState(true)
+  const [singleCard, setSingleCard] = useState("")
+  const [modal2, setModal2] = useState(false)
+  const [modal, setModal] = useState(false)
+  const data2 = adminCards
+  const { deleteCards, editCards } = useAdminCards()
 
-  const columns2 = useMemo(() => [
+  const columns2 = [
     {
       name: "Cards",
       selector: "image",
@@ -75,29 +74,29 @@ function Cards(props) {
       button: true,
       right: true
     }
-  ]);
+  ]
   const SampleExpandedComponent = ({ data }) => (
     <div className="mt-3">
       <p className="text-primary">Annual Notes : {data.annual_notes}</p>
       <p className="text-primary">Features : {data.features}</p>
     </div>
-  );
+  )
   function handleRowClick(row) {
-    setSingleCard(row);
-    toggle2(row);
+    setSingleCard(row)
+    toggle2(row)
   }
 
   function openDeleteModal(row) {
-    setSingleCard(row);
-    toggle(row);
+    setSingleCard(row)
+    toggle(row)
   }
 
   async function handleDeleteCard(id) {
     try {
-      await deleteCards(id);
-      toggle();
+      await deleteCards(id)
+      toggle()
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
 
@@ -105,11 +104,11 @@ function Cards(props) {
     <div>
       <i className="fas fa-circle-notch fa-spin fa-5x text-secondary"></i>
     </div>
-  );
+  )
 
   const ActionComponent = ({ row, onClick }) => {
-    const clickHandler = () => handleRowClick(row);
-    const deleteHandler = () => openDeleteModal(row);
+    const clickHandler = () => handleRowClick(row)
+    const deleteHandler = () => openDeleteModal(row)
 
     return (
       <>
@@ -125,10 +124,10 @@ function Cards(props) {
           onClick={deleteHandler}
         ></i>
       </>
-    );
-  };
+    )
+  }
   const DeleteButton = ({ singleCard, onClick }) => {
-    const buttonHandler = () => handleDeleteCard(singleCard);
+    const buttonHandler = () => handleDeleteCard(singleCard)
 
     return (
       <Button
@@ -137,33 +136,31 @@ function Cards(props) {
       >
         delete
       </Button>
-    );
-  };
+    )
+  }
   const EditModal = ({ singleCard, isOpen, onClick }) => {
-    const editHandler = () => updateCard(singleCard.id);
+    const editHandler = () => updateCard(singleCard.id)
 
-    const id = singleCard.id;
-    const [name, setName] = useState(singleCard.name);
-    const [useFor, setUseFor] = useState(singleCard.use_for);
-    const [annualFee, setAnnualFee] = useState(singleCard.annual_fee);
-    const [annualNotes, setAnnualNotes] = useState(singleCard.annual_notes);
-    const [appLink, setAppLink] = useState(singleCard.app_link);
-    const [approval524, setApproval524] = useState(
-      singleCard.approval_over_524
-    );
+    const id = singleCard.id
+    const [name, setName] = useState(singleCard.name)
+    const [useFor, setUseFor] = useState(singleCard.use_for)
+    const [annualFee, setAnnualFee] = useState(singleCard.annual_fee)
+    const [annualNotes, setAnnualNotes] = useState(singleCard.annual_notes)
+    const [appLink, setAppLink] = useState(singleCard.app_link)
+    const [approval524, setApproval524] = useState(singleCard.approval_over_524)
     const [bonusDeadline, setBonusDeadline] = useState(
       singleCard.bonus_deadline
-    );
-    const [counts524, setCounts524] = useState(singleCard.counts_524);
-    const [features, setFeatures] = useState(singleCard.features);
+    )
+    const [counts524, setCounts524] = useState(singleCard.counts_524)
+    const [features, setFeatures] = useState(singleCard.features)
     const [firstYearFree, setFirstYearFree] = useState(
       singleCard.first_year_free
-    );
-    const [freeIntl, setFreeIntl] = useState(singleCard.free_intl);
-    const [image, setImage] = useState(singleCard.image);
-    const [reconLine, setReconLine] = useState(singleCard.recon_line);
-    const [rewards, setRewards] = useState(singleCard.rewards);
-    const [type, setType] = useState(singleCard.type);
+    )
+    const [freeIntl, setFreeIntl] = useState(singleCard.free_intl)
+    const [image, setImage] = useState(singleCard.image)
+    const [reconLine, setReconLine] = useState(singleCard.recon_line)
+    const [rewards, setRewards] = useState(singleCard.rewards)
+    const [type, setType] = useState(singleCard.type)
     async function updateCard() {
       try {
         await editCards(
@@ -183,10 +180,10 @@ function Cards(props) {
           reconLine,
           rewards,
           type
-        );
-        toggle2();
+        )
+        toggle2()
       } catch (e) {
-        console.log("HERE?", e);
+        console.log("HERE?", e)
       }
     }
     return (
@@ -350,20 +347,20 @@ function Cards(props) {
           </Form>
         </ModalBody>
       </Modal>
-    );
-  };
+    )
+  }
   React.useEffect(() => {
     const timeout = setTimeout(() => {
-      setPending(false);
-    }, 2000);
-    return () => clearTimeout(timeout);
-  }, []);
+      setPending(false)
+    }, 2000)
+    return () => clearTimeout(timeout)
+  }, [])
 
   function toggle2(row) {
-    setModal2(!modal2);
+    setModal2(!modal2)
   }
   function toggle(row) {
-    setModal(!modal);
+    setModal(!modal)
   }
   // const FilterComponent = ({ filterText, onFilter, onClear }) => (
   //   <>
@@ -434,7 +431,7 @@ function Cards(props) {
         </ModalBody>
       </Modal>
     </>
-  );
+  )
 }
 
-export default Cards;
+export default Cards

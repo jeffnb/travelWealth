@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import {
   Button,
   Card,
@@ -12,66 +12,50 @@ import {
   InputGroupText,
   Row,
   Modal,
-  ModalHeader
-} from "reactstrap";
-import pic from "../../../assets/img/brand/logo.svg";
-import axios from "axios";
+  ModalHeader,
+  ModalBody
+} from "reactstrap"
+import pic from "../../../assets/img/brand/logo.svg"
+import axios from "axios"
+import { isEmail } from "validator"
+import { Link } from "react-router-dom"
 
 //{"name": "Mickey", "email": "mickey@disney.com", "phone": "1234567058"}
 function ResetPassword(props) {
-  const [username, setUsername] = useState("");
-  const [usernameInvalid, setUsernameInvalid] = useState(false);
-  const [password, setPassword] = useState("");
-  const [passwordInvalid, setPasswordInvalid] = useState(false);
-  const [phone, setPhone] = useState("");
-  const [phoneInvalid, setPhoneInvalid] = useState(false);
-  const [modal, setModal] = useState(false);
+  const [email, setEmail] = useState("")
+  const [emailInvalid, setEmailInvalid] = useState(false)
+  const [modal, setModal] = useState(false)
+  const [modalText, setModalText] = useState("")
 
-  const toggle = () => setModal(!modal);
-  function goHome() {
-    props.history.push("/");
-  }
+  const toggle = () => setModal(!modal)
+
   async function handleSubmit(e) {
-    e.preventDefault();
-    if (username.length === 0) {
-      setUsernameInvalid(true);
-    }
-    if (password.length === 0) {
-      setPasswordInvalid(true);
-    }
-    if (phone.length === 0) {
-      setPhoneInvalid(true);
+    e.preventDefault()
+    if (isEmail(email)) {
+      setEmailInvalid(false)
+      axios
+        .post("/api/password-reset/reset_password/", { email })
+        .then(resp => {
+          setModalText(
+            "If you have an account, you should be receiving an email with a link to reset your password shortly."
+          )
+          toggle()
+        })
+        .catch(e => {
+          setModalText("Uh oh! There was an issue. Please try again later.")
+          toggle()
+        })
     } else {
-      try {
-        let response = await axios({
-          url: "/api/customer-requests/change_password/",
-          method: "post",
-          data: {
-            name: username,
-            email: password,
-            phone: phone
-          }
-        });
-        if (response.status === 201) {
-          toggle();
-        }
-      } catch (e) {
-        console.log("ERROIm hR", e);
-        setPasswordInvalid(true);
-        setUsernameInvalid(true);
-      }
+      setEmailInvalid(true)
     }
   }
 
   return (
     <>
       <div className="app bg-dark d-flex justify-content-center align-items-center">
-        <img
-          src={pic}
-          alt="travelWealth"
-          className="loginLogo mt-n5"
-          onClick={goHome}
-        />
+        <Link to="/">
+          <img src={pic} alt="travelWealth" className="loginLogo mt-n5" />
+        </Link>
         <Card className="w-75 bg-light">
           <CardBody>
             <Form onSubmit={handleSubmit}>
@@ -79,67 +63,27 @@ function ResetPassword(props) {
               <InputGroup className="mb-5">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText className="bg-light">
-                    <i className="fas fa-user"></i>
+                    <i className="fas fa-envelope"></i>
                   </InputGroupText>
                 </InputGroupAddon>
                 <Input
-                  type="text"
-                  placeholder="Name"
-                  autoComplete="email"
-                  value={username}
-                  onChange={e => setUsername(e.target.value)}
-                  invalid={usernameInvalid}
+                  type="email"
+                  placeholder="john@email.com"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  invalid={emailInvalid}
                 />
-                <FormFeedback invalid={usernameInvalid}>
-                  The Username/Password You entered doesn't match our records.
-                </FormFeedback>
-              </InputGroup>
-              <InputGroup className="mb-5">
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText className="bg-light">
-                    <i className="fas fa-lock"></i>
-                  </InputGroupText>
-                </InputGroupAddon>
-                <Input
-                  type="text"
-                  placeholder="Email"
-                  autoComplete="email"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  invalid={passwordInvalid}
-                />
-                <FormFeedback invalid={passwordInvalid}>
-                  The Username/Password You entered doesn't match our records.
-                </FormFeedback>
-              </InputGroup>
-              <InputGroup className="mb-5">
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText className="bg-light">
-                    <i className="fas fa-phone"></i>
-                  </InputGroupText>
-                </InputGroupAddon>
-                <Input
-                  type="text"
-                  placeholder="Phone Number"
-                  autoComplete="phone"
-                  value={phone}
-                  onChange={e => setPhone(e.target.value)}
-                  invalid={phoneInvalid}
-                />
-                <FormFeedback invalid={phoneInvalid}>
-                  A Phone Number is Required
-                </FormFeedback>
+                <FormFeedback>Please enter a valid email address</FormFeedback>
               </InputGroup>
               <Row>
                 <Col xs="6" className="text-right"></Col>
-
                 <Col xs="6">
                   <Button
                     type="submit"
                     color="primary"
                     className="px-4 btn-pill float-right"
                   >
-                    Reset
+                    Send Verification Email
                   </Button>
                 </Col>
               </Row>
@@ -148,12 +92,11 @@ function ResetPassword(props) {
         </Card>
       </div>
       <Modal isOpen={modal} toggle={toggle} centered>
-        <ModalHeader toggle={toggle}>
-          Success! Your Request Has been Submitted.
-        </ModalHeader>
+        <ModalHeader toggle={toggle}>Password Reset</ModalHeader>
+        <ModalBody>{modalText}</ModalBody>
       </Modal>
     </>
-  );
+  )
 }
 
-export default ResetPassword;
+export default ResetPassword

@@ -1,25 +1,28 @@
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
 
 // action type definitions
-const GET_ALL_CLASSES = "GET_ALL_CLASSES";
+const GET_ALL_CLASSES = "GET_ALL_CLASSES"
 // const GET_CREDIT_INFO_CLASS = "GET_CREDIT_INFO_CLASS";
 // const GET_SHOPPING_INFO = "GET_SHOPPING_INFO";
 // const GET_TRAVEL_BOOKING_INFO = "GET_TRAVEL_BOOKING_INFO";
 // const GET_TRAVEL_GUIDES = "GET_TRAVEL_GUIDES";
 
 // initial state
-const initialState = {};
+const initialState = {
+  classes: []
+}
 
 // reducer (MUST BE DEFAULT EXPORT)
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_CLASSES:
+      console.log(action.payload)
       return {
         ...state,
         classes: action.payload
-      };
+      }
     // case GET_CREDIT_INFO_CLASS:
     //   return {
     //     ...state,
@@ -41,26 +44,26 @@ export default (state = initialState, action) => {
     //     classes: action.payload
     //   };
     default:
-      return state;
+      return state
   }
-};
+}
 // action creators
 function getClasses() {
   return dispatch => {
-    const accessToken = window.localStorage.getItem("token");
-    axios.defaults.headers.common["Authorization"] = "Token " + accessToken;
+    const accessToken = window.localStorage.getItem("token")
+    axios.defaults.headers.common["Authorization"] = "Token " + accessToken
     axios
       .get("/classroom/")
       .then(resp => {
         dispatch({
           type: GET_ALL_CLASSES,
           payload: resp.data
-        });
+        })
       })
       .catch(e => {
-        console.error("ERROR", e);
-      });
-  };
+        console.error("ERROR", e)
+      })
+  }
 }
 //TODO maybe we will need this in this in the future?
 // function getCreditInfo() {
@@ -133,11 +136,12 @@ function getClasses() {
 // }
 
 export function useClassroom() {
-  const dispatch = useDispatch();
-  const classes = useSelector(appState => appState.classRoomState.classes);
+  const dispatch = useDispatch()
+  const classes = useSelector(appState => appState.classRoomState.classes)
 
   useEffect(() => {
-    dispatch(getClasses());
-  }, [dispatch]);
-  return { classes };
+    dispatch(getClasses())
+  }, [dispatch])
+
+  return classes
 }

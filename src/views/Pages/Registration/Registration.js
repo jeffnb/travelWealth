@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import {
   Button,
   Card,
@@ -12,42 +12,64 @@ import {
   InputGroupText,
   Row,
   Label
-} from "reactstrap";
-import { Elements, StripeProvider } from "react-stripe-elements";
-import CheckoutForm from "../../../../src/CheckoutForm";
-import pic from "../../../assets/img/brand/logo.svg";
+} from "reactstrap"
+import { Elements, StripeProvider } from "react-stripe-elements"
+import CheckoutForm from "../../../../src/CheckoutForm"
+import pic from "../../../assets/img/brand/logo.svg"
 
 function Registration(props) {
-  const [email, setemail] = useState("");
-  const [emailInvalid, setemailInvalid] = useState(false);
-  const [firstname, setfirstname] = useState("");
-  const [firstnameInvalid, setfirstnameInvalid] = useState(false);
-  const [lastname, setlastname] = useState("");
-  const [lastnameInvalid, setlastnameInvalid] = useState(false);
-  const [password, setPassword] = useState("");
-  const [passwordInvalid, setPasswordInvalid] = useState(false);
-  const [confPassword, setConfPassword] = useState("");
-  const [confPasswordInvalid, setConfPasswordInvalid] = useState(false);
-  const [showStripe, setShowStripe] = useState(true);
+  const [email, setemail] = useState("")
+  const [emailInvalid, setemailInvalid] = useState(false)
+  const [firstname, setfirstname] = useState("")
+  const [firstnameInvalid, setfirstnameInvalid] = useState(false)
+  const [lastname, setlastname] = useState("")
+  const [lastnameInvalid, setlastnameInvalid] = useState(false)
+  const [password, setPassword] = useState("")
+  const [passwordInvalid, setPasswordInvalid] = useState(false)
+  const [confPassword, setConfPassword] = useState("")
+  const [confPasswordInvalid, setConfPasswordInvalid] = useState(false)
+  const [showStripe, setShowStripe] = useState(true)
 
   async function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
+    let error = false
+
     if (email.length <= 0) {
-      setemailInvalid(true);
+      setemailInvalid(true)
+      error = true
+    } else {
+      setemailInvalid(false)
     }
+
     if (firstname.length === 0) {
-      setfirstnameInvalid(true);
+      setfirstnameInvalid(true)
+      error = true
+    } else {
+      setfirstnameInvalid(false)
     }
+
     if (lastname.length === 0) {
-      setlastnameInvalid(true);
+      setlastnameInvalid(true)
+      error = true
+    } else {
+      setlastnameInvalid(false)
     }
+
     if (password.length < 6) {
-      setPasswordInvalid(true);
+      setPasswordInvalid(true)
+      error = true
+    } else {
+      setPasswordInvalid(false)
     }
     if (password !== confPassword || password.length < 6) {
-      setConfPasswordInvalid(true);
+      setConfPasswordInvalid(true)
+      error = true
     } else {
-      setShowStripe(false);
+      setConfPasswordInvalid(false)
+    }
+
+    if (!error) {
+      setShowStripe(false)
     }
   }
   return (
@@ -58,8 +80,10 @@ function Registration(props) {
           <Card className="w-75 bg-light">
             <CardBody>
               <Form onSubmit={handleSubmit}>
-                <h1 className="text-primary">Registration</h1>
-                <p className="text-primary">Sign up</p>
+                <h1 className="text-primary">
+                  TravelWealth Membership Registration
+                </h1>
+                <p></p>
                 <InputGroup className="mb-3">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText className="bg-light">
@@ -74,7 +98,7 @@ function Registration(props) {
                     onChange={e => setemail(e.target.value)}
                     invalid={emailInvalid}
                   />
-                  <FormFeedback invalid={emailInvalid}>
+                  <FormFeedback>
                     The Email You entered can't be empty.
                   </FormFeedback>
                 </InputGroup>
@@ -93,9 +117,7 @@ function Registration(props) {
                       onChange={e => setfirstname(e.target.value)}
                       invalid={firstnameInvalid}
                     />
-                    <FormFeedback invalid={firstnameInvalid}>
-                      Your First Name can't be empty.
-                    </FormFeedback>
+                    <FormFeedback>Your First Name can't be empty.</FormFeedback>
                   </InputGroup>
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
@@ -111,9 +133,7 @@ function Registration(props) {
                       onChange={e => setlastname(e.target.value)}
                       invalid={lastnameInvalid}
                     />
-                    <FormFeedback invalid={lastnameInvalid}>
-                      Your Last Name can't be empty.
-                    </FormFeedback>
+                    <FormFeedback>Your Last Name can't be empty.</FormFeedback>
                   </InputGroup>
                 </div>
                 <InputGroup className="mb-4">
@@ -130,7 +150,7 @@ function Registration(props) {
                     onChange={e => setPassword(e.target.value)}
                     invalid={passwordInvalid}
                   />
-                  <FormFeedback invalid={passwordInvalid}>
+                  <FormFeedback>
                     The Password You entered can't be empty.
                   </FormFeedback>
                 </InputGroup>
@@ -148,15 +168,15 @@ function Registration(props) {
                     onChange={e => setConfPassword(e.target.value)}
                     invalid={confPasswordInvalid}
                   />
-                  <FormFeedback invalid={confPasswordInvalid}>
+                  <FormFeedback>
                     The Password You entered doesn't match.
                   </FormFeedback>
                 </InputGroup>
                 <Row>
                   <Col xs="6" lg="8" className="text-right"></Col>
                   <Col xs="6" lg="4">
-                    <InputGroup check className="pl-5 mb-3">
-                      <Label check className="pl-3">
+                    <InputGroup className="pl-5 mb-3">
+                      <Label className="pl-3">
                         <Input type="checkbox" required />
                         <a href="https://www.travelwealth.com/terms">
                           Agree to the Membership Terms of Service
@@ -207,7 +227,7 @@ function Registration(props) {
         )}
       </div>
     </>
-  );
+  )
 }
 
-export default Registration;
+export default Registration

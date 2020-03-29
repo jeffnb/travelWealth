@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import {
   Jumbotron,
   Button,
@@ -6,48 +6,31 @@ import {
   CardBody,
   CardHeader,
   Collapse,
-  ListGroup,
-  ListGroupItem
-} from "reactstrap";
-import moment from "moment";
-import pic from "../../assets/img/brand/logo.svg";
-
-import { useClassroom } from "../../hooks";
+  ListGroup
+} from "reactstrap"
+import pic from "../../assets/img/brand/logo.svg"
+import PDF from "./PDF"
+import { useClassroom } from "../../hooks"
 
 function Classroom() {
-  const classes = useClassroom();
-  const data = classes.classes;
-  let creditInfo = data
-    ? data.filter(function(obj) {
-        return obj.category === "credit_card_info";
-      })
-    : "";
-  let shoppingInfo = data
-    ? data.filter(function(obj) {
-        return obj.category === "shopping_info";
-      })
-    : "";
-  let travelBookingInfo = data
-    ? data.filter(function(obj) {
-        return obj.category === "travel_booking_info";
-      })
-    : "";
-  let travelGuides = data
-    ? data.filter(function(obj) {
-        return obj.category === "travel_guides";
-      })
-    : "";
-  const [accordion, setAccordion] = useState([true, false, false, false]);
-  const [pdf, setPdf] = useState(true);
-  function toggleAccordion(tab) {
-    const prevState = accordion;
-    const state = prevState.map((x, index) => (tab === index ? !x : false));
+  const classes = useClassroom()
+  const [open, setOpen] = useState(null)
 
-    setAccordion(state);
+  const creditInfo =
+    classes.filter(obj => obj.category === "credit_card_info") || []
+  const shoppingInfo =
+    classes.filter(obj => obj.category === "shopping_info") || []
+  const travelBookingInfo =
+    classes.filter(obj => obj.category === "travel_booking_info") || []
+  const travelGuides =
+    classes.filter(obj => obj.category === "travel_guides") || []
+
+  const [accordion, setAccordion] = useState([true, false, false, false])
+
+  function toggleAccordion(tab) {
+    setAccordion(accordion.map((x, i) => (tab === i ? !x : false)))
   }
-  function handlePdf(pdf) {
-    setPdf(!pdf);
-  }
+
   return (
     <>
       <Jumbotron className="bg-dark d-flex">
@@ -81,55 +64,15 @@ function Classroom() {
             >
               <CardBody>
                 {creditInfo
-                  ? creditInfo.map(function(obj) {
+                  ? creditInfo.map(function(obj, i) {
                       return (
-                        <ListGroupItem
-                          className="d-flex justify-content-around align-items-center bg-light"
-                          key={obj.id + 21}
-                        >
-                          {pdf ? (
-                            <>
-                              <div key={obj.id + 1}>{obj.title}</div>
-                              <div key={obj.id + 2}>
-                                {moment(obj.date, "YYYYMMDD").fromNow()}
-                              </div>
-                              <Button
-                                outline
-                                size="lg"
-                                color="secondary"
-                                key={obj.id + 3}
-                                onClick={() => handlePdf(obj.resource)}
-                              >
-                                Click here to view
-                              </Button>
-                            </>
-                          ) : (
-                            <>
-                              <Button
-                                outline
-                                size="lg"
-                                color="secondary"
-                                key={obj.id + 4}
-                                onClick={() => setPdf(!pdf)}
-                              >
-                                <i
-                                  className="fas fa-angle-left"
-                                  key={obj.id + 5}
-                                ></i>
-                              </Button>
-                              <object
-                                key={obj.id + 6}
-                                width="1000"
-                                height="500"
-                                type="application/pdf"
-                                data={obj.resource}
-                              >
-                                <p key={obj.id + 7}>{obj.title}</p>
-                              </object>
-                            </>
-                          )}
-                        </ListGroupItem>
-                      );
+                        <PDF
+                          open={open}
+                          setOpen={setOpen}
+                          key={"creditinfo" + i}
+                          obj={obj}
+                        />
+                      )
                     })
                   : "There are no posts just yet, check back soon!"}
               </CardBody>
@@ -160,57 +103,15 @@ function Classroom() {
               <CardBody>
                 <ListGroup className="bg-light">
                   {shoppingInfo
-                    ? shoppingInfo.map(function(obj) {
+                    ? shoppingInfo.map(function(obj, i) {
                         return (
-                          <>
-                            <ListGroupItem
-                              className="d-flex justify-content-around align-items-center bg-light"
-                              key={obj.id + 21}
-                            >
-                              {pdf ? (
-                                <>
-                                  <div key={obj.id + 1}>{obj.title}</div>
-                                  <div key={obj.id + 2}>
-                                    {moment(obj.date, "YYYYMMDD").fromNow()}
-                                  </div>
-                                  <Button
-                                    outline
-                                    size="lg"
-                                    color="secondary"
-                                    key={obj.id + 3}
-                                    onClick={() => handlePdf(obj.resource)}
-                                  >
-                                    Click here to view
-                                  </Button>
-                                </>
-                              ) : (
-                                <>
-                                  <Button
-                                    outline
-                                    size="lg"
-                                    color="secondary"
-                                    key={obj.id + 4}
-                                    onClick={() => setPdf(!pdf)}
-                                  >
-                                    <i
-                                      className="fas fa-angle-left"
-                                      key={obj.id + 5}
-                                    ></i>
-                                  </Button>
-                                  <object
-                                    key={obj.id + 6}
-                                    width="1000"
-                                    height="500"
-                                    type="application/pdf"
-                                    data={obj.resource}
-                                  >
-                                    <p key={obj.id + 7}>{obj.title}</p>
-                                  </object>
-                                </>
-                              )}
-                            </ListGroupItem>
-                          </>
-                        );
+                          <PDF
+                            open={open}
+                            setOpen={setOpen}
+                            key={"shoppinginfo" + i}
+                            obj={obj}
+                          />
+                        )
                       })
                     : "There are no posts just yet, check back soon!"}
                 </ListGroup>
@@ -242,55 +143,15 @@ function Classroom() {
               <CardBody>
                 <ListGroup className="bg-light">
                   {travelBookingInfo
-                    ? travelBookingInfo.map(function(obj) {
+                    ? travelBookingInfo.map(function(obj, i) {
                         return (
-                          <ListGroupItem
-                            className="d-flex justify-content-around align-items-center bg-light"
-                            key={obj.id + 21}
-                          >
-                            {pdf ? (
-                              <>
-                                <div key={obj.id + 1}>{obj.title}</div>
-                                <div key={obj.id + 2}>
-                                  {moment(obj.date, "YYYYMMDD").fromNow()}
-                                </div>
-                                <Button
-                                  outline
-                                  size="lg"
-                                  color="secondary"
-                                  key={obj.id + 3}
-                                  onClick={() => handlePdf(obj.resource)}
-                                >
-                                  Click here to view
-                                </Button>
-                              </>
-                            ) : (
-                              <>
-                                <Button
-                                  outline
-                                  size="lg"
-                                  color="secondary"
-                                  key={obj.id + 4}
-                                  onClick={() => setPdf(!pdf)}
-                                >
-                                  <i
-                                    className="fas fa-angle-left"
-                                    key={obj.id + 5}
-                                  ></i>
-                                </Button>
-                                <object
-                                  key={obj.id + 6}
-                                  width="1000"
-                                  height="500"
-                                  type="application/pdf"
-                                  data={obj.resource}
-                                >
-                                  <p key={obj.id + 7}>{obj.title}</p>
-                                </object>
-                              </>
-                            )}
-                          </ListGroupItem>
-                        );
+                          <PDF
+                            open={open}
+                            setOpen={setOpen}
+                            key={"travelinfo" + i}
+                            obj={obj}
+                          />
+                        )
                       })
                     : "There are no posts just yet, check back soon!"}
                 </ListGroup>
@@ -322,55 +183,15 @@ function Classroom() {
               <CardBody>
                 <ListGroup className="bg-light">
                   {travelGuides
-                    ? travelGuides.map(function(obj, idx) {
+                    ? travelGuides.map(function(obj, i) {
                         return (
-                          <ListGroupItem
-                            className="d-flex justify-content-around align-items-center bg-light"
-                            key={obj.id + idx}
-                          >
-                            {pdf ? (
-                              <>
-                                <div key={obj.id + 1}>{obj.title}</div>
-                                <div key={obj.id + 2}>
-                                  {moment(obj.date, "YYYYMMDD").fromNow()}
-                                </div>
-                                <Button
-                                  outline
-                                  size="lg"
-                                  color="secondary"
-                                  key={obj.id + idx}
-                                  onClick={() => handlePdf(obj.resource)}
-                                >
-                                  Click here to view
-                                </Button>
-                              </>
-                            ) : (
-                              <>
-                                <Button
-                                  outline
-                                  size="lg"
-                                  color="secondary"
-                                  key={obj.id + 4}
-                                  onClick={() => setPdf(!pdf)}
-                                >
-                                  <i
-                                    className="fas fa-angle-left"
-                                    key={obj.id + idx}
-                                  ></i>
-                                </Button>
-                                <object
-                                  key={obj.id + 6}
-                                  width="1000"
-                                  height="500"
-                                  type="application/pdf"
-                                  data={obj.resource}
-                                >
-                                  <p key={obj.id + idx}>{obj.title}</p>
-                                </object>
-                              </>
-                            )}
-                          </ListGroupItem>
-                        );
+                          <PDF
+                            open={open}
+                            setOpen={setOpen}
+                            key={"travelguide" + i}
+                            obj={obj}
+                          />
+                        )
                       })
                     : "There are no posts just yet, check back soon!"}
                 </ListGroup>
@@ -380,7 +201,7 @@ function Classroom() {
         </div>
       </CardBody>
     </>
-  );
+  )
 }
 
-export default Classroom;
+export default Classroom

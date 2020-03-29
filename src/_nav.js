@@ -39,11 +39,11 @@ export default {
         rel: "noopener"
       }
     },
-    {
-      name: "Refer a Friend",
-      url: "/referral",
-      icon: "fas fa-users"
-    },
+    // {
+    //   name: "Refer a Friend",
+    //   url: "/referral",
+    //   icon: "fas fa-users"
+    // },
     {
       name: "Useful Tools",
       url: "/wallet",
@@ -88,4 +88,4 @@ export default {
       ]
     }
   ]
-};
+}

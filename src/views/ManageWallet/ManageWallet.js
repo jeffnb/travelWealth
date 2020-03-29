@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import {
   Col,
   Input,
@@ -14,38 +14,37 @@ import {
   Modal,
   ModalBody,
   ModalHeader
-} from "reactstrap";
-import { useRecCards, useMyCards } from "../../hooks";
-import DataTable from "react-data-table-component";
-import { useForms } from "../../hooks";
-import Select from "react-select";
-import { useAdminCards } from "../../hooks";
+} from "reactstrap"
+import { useRecCards, useMyCards } from "../../hooks"
+import DataTable from "react-data-table-component"
+import { useForms } from "../../hooks"
+import Select from "react-select"
+import { useAdminCards } from "../../hooks"
 
 //FIX ME sweet jesus this file is out of control.
 function ManageWallet(props) {
-  const { adminCards } = useAdminCards();
-  const [collapse, setCollapse] = useState(false);
-  const [pending, setPending] = useState(true);
-  const [modal, setModal] = useState(false);
-  const [modal2, setModal2] = useState(false);
-  const { recCards } = useRecCards();
-  const data2 = recCards;
-  const { MyCards } = useMyCards();
-  const data = MyCards;
-  const [inquiry, setInquiry] = useState("");
-  const [wallet_updated, setWallet] = useState("");
-  const [notes, setNotes] = useState("");
-  const { requestCard } = useForms();
-  const [type, setType] = useState("");
-  const [date_opened, setDateOpened] = useState("");
-  const [status, setStatus] = useState("");
-  const [card, setCard] = useState("");
-  const [showInput, setShowInput] = useState(false);
-  const { newCard } = useMyCards();
+  const { adminCards } = useAdminCards()
+  const [collapse, setCollapse] = useState(true)
+  const [pending, setPending] = useState(true)
+  const [modal, setModal] = useState(false)
+  const [modal2, setModal2] = useState(false)
+  const { recCards } = useRecCards()
+  const data2 = recCards
+  const { MyCards } = useMyCards()
+  const data = MyCards
+  const [inquiry, setInquiry] = useState("")
+  const [wallet_updated, setWallet] = useState("")
+  const [notes, setNotes] = useState("")
+  const { requestCard } = useForms()
+  const [type, setType] = useState("")
+  const [date_opened, setDateOpened] = useState("")
+  const [card, setCard] = useState("")
+  const [showInput, setShowInput] = useState(false)
+  const { newCard } = useMyCards()
   const allCardsList = adminCards.map(opt => ({
     label: opt.name,
     value: opt.id
-  }));
+  }))
 
   const columns = [
     {
@@ -65,7 +64,7 @@ function ManageWallet(props) {
     },
     {
       name: "Account Holder",
-      selector: "type",
+      selector: "user.first_name",
       sortable: true,
       format: row => `${row.type.charAt(0).toUpperCase() + row.type.slice(1)}`
     },
@@ -80,17 +79,17 @@ function ManageWallet(props) {
       sortable: true,
       wrap: true
     },
-    {
-      name: "Free Intl",
-      selector: "card.free_intl",
-      sortable: true,
-      format: row =>
-        `${
-          row.card.free_intl === false
-            ? row.card.free_intl.toString().replace(/false/gi, "No")
-            : row.card.free_intl.toString().replace(/true/gi, "Yes")
-        }`
-    },
+    // {
+    //   name: "Free Intl",
+    //   selector: "card.free_intl",
+    //   sortable: true,
+    //   format: row =>
+    //     `${
+    //       row.card.free_intl === false
+    //         ? row.card.free_intl.toString().replace(/false/gi, "No")
+    //         : row.card.free_intl.toString().replace(/true/gi, "Yes")
+    //     }`
+    // },
     {
       name: "Annual Fee",
       selector: "card.annual_fee",
@@ -98,7 +97,7 @@ function ManageWallet(props) {
       wrap: true,
       format: row => `${"$" + row.card.annual_fee}`
     }
-  ];
+  ]
   const columns2 = [
     {
       name: "",
@@ -132,73 +131,64 @@ function ManageWallet(props) {
       wrap: true
     },
     {
-      name: "Free Intl",
-      selector: "card.free_intl",
-      sortable: true,
-      format: row =>
-        `${
-          row.card.free_intl === false
-            ? row.card.free_intl.toString().replace(/false/gi, "No")
-            : row.card.free_intl.toString().replace(/true/gi, "Yes")
-        }`
-    },
-    {
       name: "Fee",
       selector: "card.annual_fee",
       sortable: true,
       format: row => `${"$" + row.card.annual_fee}`
     }
-  ];
+  ]
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setPending(false);
-    }, 2000);
-    return () => clearTimeout(timeout);
-  }, []);
+      setPending(false)
+    }, 2000)
+    return () => clearTimeout(timeout)
+  }, [])
 
   function toggle() {
-    setModal(!modal);
+    setModal(!modal)
   }
   function toggle2() {
-    setModal2(!modal2);
+    setModal2(!modal2)
   }
   function handleShow() {
-    setShowInput(!showInput);
+    setShowInput(!showInput)
   }
   function toggleAccordion() {
-    setCollapse(!collapse);
+    setCollapse(!collapse)
   }
   function handleRequestSubmit(e) {
-    e.preventDefault();
-    requestCard(inquiry, wallet_updated, notes);
-    toggle();
+    e.preventDefault()
+    requestCard(inquiry, wallet_updated, notes)
+    toggle()
   }
   function handleSubmit(e) {
-    e.preventDefault();
-    newCard(type, date_opened, card, status);
-    toggle2();
-    window.location.reload();
+    e.preventDefault()
+    newCard(type, date_opened, card)
+    toggle2()
+    window.location.reload()
   }
   const CustomLoader = () => (
     <div>
       <i className="fas fa-circle-notch fa-spin fa-5x text-secondary"></i>
     </div>
-  );
+  )
   const ActiveExpanded = ({ data }) => (
     <div className="mt-3">
       <p className="text-primary">Annual Notes : {data.card.annual_notes}</p>
       <p className="text-primary">Features : {data.card.features}</p>
     </div>
-  );
+  )
   const RecommendExpand = ({ data }) => (
     <div className="mt-3">
-      <p className="text-primary">Annual Notes : {data.card.annual_notes}</p>
+      <p className="text-primary">
+        Application Link : {data.card.app_link || "N/A"}
+      </p>
       <p className="text-primary">Features : {data.card.features}</p>
     </div>
-  );
+  )
   const style = {
     margin: "-68px 0 0 0"
-  };
+  }
   return (
     <>
       <div className="mb-3 mt-3 row ml-1 mr-1">
@@ -344,19 +334,15 @@ function ManageWallet(props) {
               <Row>
                 <Col>
                   <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="notes">Notes/Instructions</Label>
-                    </Col>
-                    <Col xs="12" md="9">
-                      <Input
-                        type="textarea"
-                        name="notes"
-                        id="notes"
-                        rows="3"
-                        value={notes}
-                        onChange={e => setNotes(e.target.value)}
-                      />
-                    </Col>
+                    <Label htmlFor="notes">Notes/Instructions</Label>
+                    <Input
+                      type="textarea"
+                      name="notes"
+                      id="notes"
+                      rows="3"
+                      value={notes}
+                      onChange={e => setNotes(e.target.value)}
+                    />
                   </FormGroup>
                 </Col>
               </Row>
@@ -380,56 +366,7 @@ function ManageWallet(props) {
           <Col>
             <Form onSubmit={handleSubmit}>
               <Row>
-                <Col xs="12" md="6">
-                  <FormGroup row>
-                    <Col md="4">
-                      <Label>Status</Label>
-                    </Col>
-                    <Col md="8">
-                      <FormGroup
-                        check
-                        className="radio"
-                        id="status"
-                        value={status}
-                        onChange={e => setStatus(e.target.value)}
-                      >
-                        <Row>
-                          <Input
-                            className="form-check-input"
-                            type="radio"
-                            id="statusYes"
-                            name="radios"
-                            value="active"
-                          />
-                          <Label
-                            check
-                            className="form-check-label"
-                            htmlFor="statusYes"
-                          >
-                            Active
-                          </Label>
-                        </Row>
-                        <Row>
-                          <Input
-                            className="form-check-input"
-                            type="radio"
-                            id="statusNo"
-                            name="radios"
-                            value="inactive"
-                          />
-                          <Label
-                            check
-                            className="form-check-label"
-                            htmlFor="statusNo"
-                          >
-                            Inactive
-                          </Label>
-                        </Row>
-                      </FormGroup>
-                    </Col>
-                  </FormGroup>
-                </Col>
-                <Col xs="12" md="6">
+                <Col>
                   <FormGroup>
                     <Label htmlFor="date_opened">Date Opened</Label>
                     <Input
@@ -465,7 +402,7 @@ function ManageWallet(props) {
                 </Col>
                 <Col xs="12" md="6">
                   <FormGroup>
-                    <Label htmlFor="type">Type</Label>
+                    <Label htmlFor="type">Cardholder</Label>
                     <Input
                       type="select"
                       name="type"
@@ -520,17 +457,10 @@ function ManageWallet(props) {
         <Col>
           <Card className="bg-light text-primary">
             {data && data[0] ? (
-              <>
-                <CardHeader className="d-flex justify-content-between">
-                  <div>5/24 {data[0].user.first_name}</div>
-
-                  <i className="fas fa-user"></i>
-                </CardHeader>
-                <CardBody>
-                  {data[0].user.first_name}'s Card Count:
-                  <span> {data[0].user.accountprofile.member_524.length}</span>
-                </CardBody>
-              </>
+              <CardBody>
+                5/24 {data[0].user.first_name}'s Card Count:
+                <span> {data[0].user.accountprofile.member_524.length}</span>
+              </CardBody>
             ) : (
               ""
             )}
@@ -539,28 +469,12 @@ function ManageWallet(props) {
         <Col>
           <Card className="bg-light text-primary">
             {data && data[0] ? (
-              <>
-                <CardHeader className="d-flex justify-content-between">
-                  <div>
-                    5/24
-                    {data[0].user.accountprofile.companion_first_name
-                      ? data[0].user.accountprofile.companion_first_name
-                      : " Companion"}
-                  </div>
-
-                  <i className="fas fa-user-friends"></i>
-                </CardHeader>
-                <CardBody>
-                  {data[0].user.accountprofile.companion_first_name
-                    ? data[0].user.accountprofile.companion_first_name + "'s "
-                    : "Companion's "}
-                  Card Count:
-                  <span>
-                    {" "}
-                    {data[0].user.accountprofile.companion_524.length}
-                  </span>
-                </CardBody>{" "}
-              </>
+              <CardBody>
+                <span>
+                  5/24 Companion's Card Count:{" "}
+                  {data[0].user.accountprofile.companion_524.length}
+                </span>
+              </CardBody>
             ) : (
               ""
             )}
@@ -568,6 +482,6 @@ function ManageWallet(props) {
         </Col>
       </Row>
     </>
-  );
+  )
 }
-export default ManageWallet;
+export default ManageWallet

@@ -43,7 +43,8 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "stripe": "^8.4.1",
-    "styled-components": "^4.4.1"
+    "styled-components": "^4.4.1",
+    "validator": "^13.0.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.12.0",

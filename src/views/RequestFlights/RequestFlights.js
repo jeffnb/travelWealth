@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import {
   Button,
   Card,
@@ -11,75 +11,118 @@ import {
   FormText,
   Input,
   Label,
-  Row
-} from "reactstrap";
-import { useFlights } from "../../hooks";
+  Row,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
+} from "reactstrap"
+import { useFlights } from "../../hooks"
 
 function RequestFlights(props) {
-  const [routing, setRouting] = useState("");
-  const [flexRouting, setflexRouting] = useState("");
-  const [departCity, setdepartCity] = useState("");
-  const [departCityInvalid, setdepartCityInvalid] = useState(false);
-  const [destinations, setDestinations] = useState("");
-  const [destinationsInvalid, setDestinationsInvalid] = useState(false);
-  const [departDate, setdepartDate] = useState("");
-  const [departDateInvalid, setdepartDateInvalid] = useState(false);
-  const [flexDepartDate, setflexDepartDate] = useState("");
-  const [returnDate, setreturnDate] = useState("");
-  const [returnDateInvalid, setreturnDateInvalid] = useState(false);
-  const [flexReturnDate, setflexReturnDate] = useState("");
-  const [preferred, setPreffered] = useState("");
-  const [passengers, setPassengers] = useState("");
-  const [passengersInvalid, setPassengersInvalid] = useState(false);
-  const [passNames, setpassNames] = useState("");
-  const [passNamesInvalid, setpassNamesInvalid] = useState(false);
-  const [bags, setBags] = useState("");
-  const [bagsInvalid, setBagsInvalid] = useState(false);
-  const [notes, setNotes] = useState("");
-  const { requestFlight } = useFlights();
+  const [modal, setModal] = useState(false)
+  const [modaltext, setModaltext] = useState("")
+  const [routing, setRouting] = useState("")
+  const [departCity, setdepartCity] = useState("")
+  const [departCityInvalid, setdepartCityInvalid] = useState(false)
+  const [destinations, setDestinations] = useState("")
+  const [destinationsInvalid, setDestinationsInvalid] = useState(false)
+  const [departDate, setdepartDate] = useState("")
+  const [departDateInvalid, setdepartDateInvalid] = useState(false)
+  const [returnDate, setreturnDate] = useState("")
+  const [returnDateInvalid, setreturnDateInvalid] = useState(false)
+  const [howFlexible, setHowFlexible] = useState("")
+  const [howFlexibleInvalid, setHowFlexibleInvalid] = useState(false)
+  const [preferred, setPreffered] = useState("")
+  const [passengers, setPassengers] = useState("")
+  const [passengersInvalid, setPassengersInvalid] = useState(false)
+  const [passNames, setpassNames] = useState("")
+  const [passNamesInvalid, setpassNamesInvalid] = useState(false)
+  const [bags, setBags] = useState("")
+  const [bagsInvalid, setBagsInvalid] = useState(false)
+  const [notes, setNotes] = useState("")
+  const { requestFlight } = useFlights()
 
   async function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
+    let error = false
+
     if (departCity.length === 0) {
-      setdepartCityInvalid(true);
-    }
-    if (destinations.length === 0) {
-      setDestinationsInvalid(true);
-    }
-    if (departDate.length === 0) {
-      setdepartDateInvalid(true);
-    }
-    if (returnDate.length === 0) {
-      setreturnDateInvalid(true);
-    }
-    if (passengers.length === 0) {
-      setPassengersInvalid(true);
-    }
-    if (passNames.length === 0) {
-      setpassNamesInvalid(true);
-    }
-    if (bags.length === 0) {
-      setBagsInvalid(true);
+      setdepartCityInvalid(true)
+      error = true
     } else {
+      setdepartCityInvalid(false)
+    }
+
+    if (destinations.length === 0) {
+      setDestinationsInvalid(true)
+      error = true
+    } else {
+      setDestinationsInvalid(false)
+    }
+
+    if (departDate.length === 0) {
+      setdepartDateInvalid(true)
+      error = true
+    } else {
+      setdepartDateInvalid(false)
+    }
+
+    if (returnDate.length === 0) {
+      setreturnDateInvalid(true)
+      error = true
+    } else {
+      setreturnDateInvalid(false)
+    }
+
+    if (howFlexible.length === 0) {
+      setHowFlexibleInvalid(true)
+      error = true
+    } else {
+      setHowFlexibleInvalid(false)
+    }
+
+    if (passengers.length === 0 || isNaN(Number(passengers))) {
+      setPassengersInvalid(true)
+      error = true
+    } else {
+      setPassengersInvalid(false)
+    }
+
+    if (passNames.length === 0) {
+      setpassNamesInvalid(true)
+      error = true
+    } else {
+      setpassNamesInvalid(false)
+    }
+
+    if (bags.length === 0 || isNaN(Number(bags))) {
+      setBagsInvalid(true)
+      error = true
+    } else {
+      setBagsInvalid(false)
+    }
+
+    if (!error) {
       try {
         await requestFlight(
           routing,
-          flexRouting,
           departCity,
           destinations,
           departDate,
-          flexDepartDate,
           returnDate,
-          flexReturnDate,
+          howFlexible,
           preferred,
           passengers,
           passNames,
           bags,
           notes
-        );
-        props.history.push("/");
+        )
+        setModaltext("Your form was submitted successfully")
+        setModal(true)
       } catch (e) {
-        console.log(e);
+        setModaltext("There was an issue submitting your form")
+        setModal(true)
       }
     }
   }
@@ -158,54 +201,6 @@ function RequestFlights(props) {
                     </Col>
                   </FormGroup>
                 </Col>
-                <Col xs="12" md="6">
-                  <FormGroup row>
-                    <Col md="4">
-                      <Label>Flexible on routing?</Label>
-                    </Col>
-                    <Col md="8">
-                      <FormGroup
-                        check
-                        className="radio"
-                        value={flexRouting}
-                        onChange={e => setflexRouting(e.target.value)}
-                      >
-                        <Row>
-                          <Input
-                            className="form-check-input"
-                            type="radio"
-                            id="radio1"
-                            name="radios"
-                            value="yes"
-                          />
-                          <Label
-                            check
-                            className="form-check-label"
-                            htmlFor="radio1"
-                          >
-                            Yes
-                          </Label>
-                        </Row>
-                        <Row>
-                          <Input
-                            className="form-check-input"
-                            type="radio"
-                            id="radio2"
-                            name="radios"
-                            value="no"
-                          />
-                          <Label
-                            check
-                            className="form-check-label"
-                            htmlFor="radio2"
-                          >
-                            No
-                          </Label>
-                        </Row>
-                      </FormGroup>
-                    </Col>
-                  </FormGroup>
-                </Col>
               </Row>
               <Row>
                 <Col xs="12" md="6">
@@ -219,9 +214,7 @@ function RequestFlights(props) {
                       id="depart"
                       invalid={departCityInvalid}
                     />
-                    <FormFeedback invalid={departCityInvalid}>
-                      Departure City is Required
-                    </FormFeedback>
+                    <FormFeedback>Departure City is Required</FormFeedback>
                   </FormGroup>
                 </Col>
                 <Col xs="12" md="6">
@@ -235,9 +228,7 @@ function RequestFlights(props) {
                       id="destinations"
                       invalid={destinationsInvalid}
                     />
-                    <FormFeedback invalid={destinationsInvalid}>
-                      Destination(s) is Required
-                    </FormFeedback>
+                    <FormFeedback>Destination(s) is Required</FormFeedback>
                   </FormGroup>
                 </Col>
               </Row>
@@ -248,10 +239,8 @@ function RequestFlights(props) {
                     value={departDate}
                     onChange={e => setdepartDate(e.target.value)}
                   >
-                    <Col md="2">
+                    <Col>
                       <Label htmlFor="depart-input">Departure Date</Label>
-                    </Col>
-                    <Col xs="12" md="10">
                       <Input
                         type="date"
                         id="depart-input"
@@ -259,9 +248,7 @@ function RequestFlights(props) {
                         placeholder="date"
                         invalid={departDateInvalid}
                       />
-                      <FormFeedback invalid={departDateInvalid}>
-                        Departure Date is Required
-                      </FormFeedback>
+                      <FormFeedback>Departure Date is Required</FormFeedback>
                       <FormText className="help-block">
                         Close-in Ticketing Fee: requests submitted less than 90
                         days before departure will incur an additional charge of
@@ -271,52 +258,21 @@ function RequestFlights(props) {
                   </FormGroup>
                 </Col>
                 <Col xs="12" md="6">
-                  <FormGroup row>
-                    <Col md="4">
-                      <Label>Flexible on departure?</Label>
-                    </Col>
-                    <Col md="8">
-                      <FormGroup
-                        check
-                        className="radio"
-                        value={flexDepartDate}
-                        onChange={e => setflexDepartDate(e.target.value)}
-                      >
-                        <Row>
-                          <Input
-                            className="form-check-input"
-                            type="radio"
-                            id="departYes"
-                            name="departYes"
-                            value="yes"
-                          />
-                          <Label
-                            check
-                            className="form-check-label"
-                            htmlFor="departYes"
-                          >
-                            Yes
-                          </Label>
-                        </Row>
-                        <Row>
-                          <Input
-                            className="form-check-input"
-                            type="radio"
-                            id="departNo"
-                            name="departNo"
-                            value="no"
-                          />
-                          <Label
-                            check
-                            className="form-check-label"
-                            htmlFor="departNo"
-                          >
-                            No
-                          </Label>
-                        </Row>
-                      </FormGroup>
-                    </Col>
-                  </FormGroup>
+                  <Col>
+                    <FormGroup row>
+                      <Label htmlFor="howFlexible">
+                        How flexible are your dates?
+                      </Label>
+                      <Input
+                        type="text"
+                        id="howFlexible"
+                        value={howFlexible}
+                        onChange={e => setHowFlexible(e.target.value)}
+                        invalid={howFlexibleInvalid}
+                      />
+                      <FormFeedback>How flexible is Required</FormFeedback>
+                    </FormGroup>
+                  </Col>
                 </Col>
               </Row>
               <Row>
@@ -326,10 +282,8 @@ function RequestFlights(props) {
                     value={returnDate}
                     onChange={e => setreturnDate(e.target.value)}
                   >
-                    <Col md="2">
+                    <Col>
                       <Label htmlFor="return-input">Return Date</Label>
-                    </Col>
-                    <Col xs="12" md="10">
                       <Input
                         type="date"
                         id="return-input"
@@ -337,57 +291,7 @@ function RequestFlights(props) {
                         placeholder="date"
                         invalid={returnDateInvalid}
                       />
-                      <FormFeedback invalid={returnDateInvalid}>
-                        Return Date is Required
-                      </FormFeedback>
-                    </Col>
-                  </FormGroup>
-                </Col>
-                <Col xs="12" md="6">
-                  <FormGroup row>
-                    <Col md="4">
-                      <Label>Flexible on return?</Label>
-                    </Col>
-                    <Col md="8">
-                      <FormGroup
-                        check
-                        className="radio"
-                        value={flexReturnDate}
-                        onChange={e => setflexReturnDate(e.target.value)}
-                      >
-                        <Row>
-                          <Input
-                            className="form-check-input"
-                            type="radio"
-                            id="returnYes"
-                            name="radios"
-                            value="option1"
-                          />
-                          <Label
-                            check
-                            className="form-check-label"
-                            htmlFor="returnYes"
-                          >
-                            Yes
-                          </Label>
-                        </Row>
-                        <Row>
-                          <Input
-                            className="form-check-input"
-                            type="radio"
-                            id="returnNo"
-                            name="radios"
-                            value="option2"
-                          />
-                          <Label
-                            check
-                            className="form-check-label"
-                            htmlFor="returnNo"
-                          >
-                            No
-                          </Label>
-                        </Row>
-                      </FormGroup>
+                      <FormFeedback>Return Date is Required</FormFeedback>
                     </Col>
                   </FormGroup>
                 </Col>
@@ -421,8 +325,8 @@ function RequestFlights(props) {
                       id="passengers"
                       invalid={passengersInvalid}
                     />
-                    <FormFeedback invalid={passengersInvalid}>
-                      Passengers is Required
+                    <FormFeedback>
+                      Passengers is required and must be a number
                     </FormFeedback>
                   </FormGroup>
                 </Col>
@@ -439,9 +343,7 @@ function RequestFlights(props) {
                       id="passengerNames"
                       invalid={passNamesInvalid}
                     />
-                    <FormFeedback invalid={passNamesInvalid}>
-                      Passenger Name(s) is Required
-                    </FormFeedback>
+                    <FormFeedback>Passenger Name(s) is Required</FormFeedback>
                   </FormGroup>
                 </Col>
                 <Col xs="12" md="6">
@@ -453,8 +355,8 @@ function RequestFlights(props) {
                       How many total bags will you be checking?
                     </Label>
                     <Input type="text" id="bags" invalid={bagsInvalid} />
-                    <FormFeedback invalid={bagsInvalid}>
-                      Bags is Required
+                    <FormFeedback>
+                      Bags is required and must be a number
                     </FormFeedback>
                     <FormText className="help-block">
                       Certain airlines may charge an additional fee for checked
@@ -470,10 +372,8 @@ function RequestFlights(props) {
                     value={notes}
                     onChange={e => setNotes(e.target.value)}
                   >
-                    <Col md="3">
+                    <Col>
                       <Label htmlFor="notes">Notes/Instructions</Label>
-                    </Col>
-                    <Col xs="12" md="9">
                       <Input
                         type="textarea"
                         name="notes"
@@ -497,8 +397,17 @@ function RequestFlights(props) {
           </CardBody>
         </Card>
       </Col>
+      <Modal isOpen={modal}>
+        <ModalHeader>Modal title</ModalHeader>
+        <ModalBody>{modaltext}</ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={e => props.history.push("/")}>
+            Back to Home
+          </Button>{" "}
+        </ModalFooter>
+      </Modal>
     </>
-  );
+  )
 }
 
-export default RequestFlights;
+export default RequestFlights
