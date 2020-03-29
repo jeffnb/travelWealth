@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom"
+import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 // import { renderRoutes } from 'react-router-config';
 import "./App.scss"
 import { useAuth } from "./hooks"
@@ -35,7 +35,7 @@ const CheckAuth = props => {
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <React.Suspense fallback={loading()}>
         <Switch>
           <Route
@@ -77,7 +77,7 @@ function App() {
           <Route path="*" component={CheckAuth} />
         </Switch>
       </React.Suspense>
-    </BrowserRouter>
+    </Router>
   )
 }
 
