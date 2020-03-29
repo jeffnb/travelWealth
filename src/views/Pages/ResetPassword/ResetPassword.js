@@ -93,8 +93,12 @@ function ResetPassword(props) {
       </div>
       <Modal isOpen={modal} toggle={toggle} centered>
         <ModalHeader toggle={toggle}>Password Reset</ModalHeader>
-        <ModalBody>{modalText}</ModalBody>
-        <Link to="/login">Back to Login</Link>
+        <ModalBody>
+          <p>{modalText}</p>
+          <p>
+            <Link to="/login">Back to Login</Link>
+          </p>
+        </ModalBody>
       </Modal>
     </>
   )

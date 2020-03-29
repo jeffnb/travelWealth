@@ -124,7 +124,7 @@ function ResetPassword(props) {
                     color="primary"
                     className="px-4 btn-pill float-right"
                   >
-                    Send Verification Email
+                    Reset Password
                   </Button>
                 </Col>
               </Row>
@@ -133,9 +133,12 @@ function ResetPassword(props) {
         </Card>
       </div>
       <Modal isOpen={modal} toggle={toggle} centered>
-        <ModalHeader toggle={toggle}>{modalText}</ModalHeader>
+        <ModalHeader toggle={toggle}>Password Reset</ModalHeader>
         <ModalBody>
-          <Link to="/login">Back to Login</Link>
+          <p>{modalText}</p>
+          <p>
+            <Link to="/login">Back to Login</Link>
+          </p>
         </ModalBody>
       </Modal>
     </>
