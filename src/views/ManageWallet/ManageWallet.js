@@ -13,7 +13,7 @@ import {
   Collapse,
   Modal,
   ModalBody,
-  ModalHeader
+  ModalHeader,
 } from "reactstrap"
 import { useRecCards, useMyCards } from "../../hooks"
 import DataTable from "react-data-table-component"
@@ -41,10 +41,13 @@ function ManageWallet(props) {
   const [card, setCard] = useState("")
   const [showInput, setShowInput] = useState(false)
   const { newCard } = useMyCards()
-  const allCardsList = adminCards.map(opt => ({
+  const allCardsList = adminCards.map((opt) => ({
     label: opt.name,
-    value: opt.id
+    value: opt.id,
   }))
+
+  console.log("data", data)
+  console.log("data2", data2)
 
   const columns = [
     {
@@ -52,31 +55,31 @@ function ManageWallet(props) {
       selector: "card.image",
       sortable: true,
       maxWidth: "50px",
-      cell: row => (
+      cell: (row) => (
         <img className="tableCards" alt={row.card.name} src={row.card.image} />
-      )
+      ),
     },
     {
       name: "Cards",
       selector: "card.name",
       sortable: true,
-      wrap: true
+      wrap: true,
     },
     {
       name: "Account Holder",
       selector: "user.first_name",
-      sortable: true
+      sortable: true,
     },
     {
       name: "Date Open",
       selector: "date_opened",
-      sortable: true
+      sortable: true,
     },
     {
       name: "Use For",
       selector: "card.use_for",
       sortable: true,
-      wrap: true
+      wrap: true,
     },
     // {
     //   name: "Free Intl",
@@ -94,8 +97,8 @@ function ManageWallet(props) {
       selector: "card.annual_fee",
       sortable: true,
       wrap: true,
-      format: row => `${"$" + row.card.annual_fee}`
-    }
+      format: (row) => `${"$" + row.card.annual_fee}`,
+    },
   ]
   const columns2 = [
     {
@@ -103,38 +106,38 @@ function ManageWallet(props) {
       selector: "card.image",
       sortable: true,
       maxWidth: "50px",
-      cell: row => (
+      cell: (row) => (
         <img className="tableCards" alt={row.card.name} src={row.card.image} />
-      )
+      ),
     },
     {
       name: "Cards",
       selector: "card.name",
       sortable: true,
-      wrap: true
+      wrap: true,
     },
     {
       name: "Account Holder",
       selector: "user.first_name",
-      sortable: true
+      sortable: true,
     },
     {
       name: "Open After",
       selector: "open_after",
-      sortable: true
+      sortable: true,
     },
     {
       name: "Use For",
       selector: "card.use_for",
       sortable: true,
-      wrap: true
+      wrap: true,
     },
     {
       name: "Fee",
       selector: "card.annual_fee",
       sortable: true,
-      format: row => `${"$" + row.card.annual_fee}`
-    }
+      format: (row) => `${"$" + row.card.annual_fee}`,
+    },
   ]
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -186,7 +189,7 @@ function ManageWallet(props) {
     </div>
   )
   const style = {
-    margin: "-68px 0 0 0"
+    margin: "-68px 0 0 0",
   }
   return (
     <>
@@ -265,7 +268,7 @@ function ManageWallet(props) {
                       name="inquiry"
                       id="inquiry"
                       value={inquiry}
-                      onChange={e => setInquiry(e.target.value)}
+                      onChange={(e) => setInquiry(e.target.value)}
                     >
                       <option value="0">Please select</option>
                       <option value="I'm ready for a new card">
@@ -291,7 +294,7 @@ function ManageWallet(props) {
                         className="radio"
                         id="wallet_updated"
                         value={wallet_updated}
-                        onChange={e => setWallet(e.target.value)}
+                        onChange={(e) => setWallet(e.target.value)}
                       >
                         <Row>
                           <Input
@@ -340,7 +343,7 @@ function ManageWallet(props) {
                       id="notes"
                       rows="3"
                       value={notes}
-                      onChange={e => setNotes(e.target.value)}
+                      onChange={(e) => setNotes(e.target.value)}
                     />
                   </FormGroup>
                 </Col>
@@ -373,7 +376,7 @@ function ManageWallet(props) {
                       id="date_opened"
                       placeholder="YYYY-MM-DD"
                       value={date_opened}
-                      onChange={e => setDateOpened(e.target.value)}
+                      onChange={(e) => setDateOpened(e.target.value)}
                     />
                   </FormGroup>
                 </Col>
@@ -388,10 +391,10 @@ function ManageWallet(props) {
                       name="card"
                       id="card"
                       value={card}
-                      onChange={e => setCard(e.target.value)}
+                      onChange={(e) => setCard(e.target.value)}
                     >
                       <option>Please select</option>
-                      {recCards.map(card => (
+                      {recCards.map((card) => (
                         <option key={card.card.id} value={card.card.id}>
                           {card.card.name}
                         </option>
@@ -407,7 +410,7 @@ function ManageWallet(props) {
                       name="type"
                       id="type"
                       value={type}
-                      onChange={e => setType(e.target.value)}
+                      onChange={(e) => setType(e.target.value)}
                     >
                       <option value="0">Please select</option>
                       <option value="member">Member</option>
@@ -433,7 +436,7 @@ function ManageWallet(props) {
                     <Select
                       className="text-dark"
                       options={allCardsList}
-                      onChange={opt => setCard(opt.value)}
+                      onChange={(opt) => setCard(opt.value)}
                     />
                   ) : (
                     ""

@@ -290,3 +290,27 @@ button.bg-light:focus {
 .loginCard {
   height: 400px;
 }
+
+.terms {
+  width: 700px;
+
+  .modal-body {
+    overflow: auto;
+    max-height: 500px;
+  }
+}
+
+.class-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.class-title {
+  margin-left: 100px;
+}
+
+.class-button {
+  margin-right: 100px;
+}

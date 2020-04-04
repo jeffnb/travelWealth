@@ -6,14 +6,14 @@ function PDF(props) {
   const open = props.open === obj.title
 
   return (
-    <ListGroupItem
-      className="d-flex justify-content-around align-items-center bg-light"
-      key={obj.id + 21}
-    >
+    <ListGroupItem className="class-item bg-light" key={obj.id + 21}>
       {!open ? (
         <>
-          <div key={obj.id + 1}>{obj.title}</div>
+          <div className="class-title" key={obj.id + 1}>
+            {obj.title}
+          </div>
           <Button
+            className="class-button"
             outline
             size="lg"
             color="secondary"
@@ -48,7 +48,7 @@ function PDF(props) {
 }
 
 PDF.defaultProps = {
-  obj: {}
+  obj: {},
 }
 
 export default PDF
