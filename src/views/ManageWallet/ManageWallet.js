@@ -48,6 +48,17 @@ function ManageWallet(props) {
 
   console.log("data", data)
   console.log("data2", data2)
+  // data = data.map(item => {
+  //   if (item.type.includes('member')) {
+  //     item.card_holder_name = item.user.first_name
+  //   } else {
+  //     item.card_holder_name = item.user.accountprofile.companion_first_name
+  //   }
+  // })
+
+  // data2 = data2.map(item => {
+
+  // })
 
   const columns = [
     {
@@ -67,7 +78,7 @@ function ManageWallet(props) {
     },
     {
       name: "Account Holder",
-      selector: "user.first_name",
+      selector: "card_owner_first_name",
       sortable: true,
     },
     {
@@ -118,7 +129,7 @@ function ManageWallet(props) {
     },
     {
       name: "Account Holder",
-      selector: "user.first_name",
+      selector: "recommended_for_name",
       sortable: true,
     },
     {

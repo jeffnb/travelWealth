@@ -32,8 +32,9 @@ function Registration(props) {
   const [passwordInvalid, setPasswordInvalid] = useState(false)
   const [confPassword, setConfPassword] = useState("")
   const [confPasswordInvalid, setConfPasswordInvalid] = useState(false)
-  const [showStripe, setShowStripe] = useState(true)
+  const [showStripe, setShowStripe] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const publicKey = "pk_live_LrIE3zNzLoz5oKkl1IABlHHN"
 
   function handleClick(e) {
     e.preventDefault()
@@ -79,14 +80,14 @@ function Registration(props) {
     }
 
     if (!error) {
-      setShowStripe(false)
+      setShowStripe(true)
     }
   }
   return (
     <>
       <div className="app bg-dark d-flex justify-content-center align-items-center">
         <img src={pic} alt="travelWealth" className="loginLogo mt-n5" />
-        {showStripe ? (
+        {!showStripe ? (
           <Card className="w-75 bg-light">
             <CardBody>
               <Form onSubmit={handleSubmit}>
@@ -188,7 +189,10 @@ function Registration(props) {
                     <InputGroup className="pl-5 mb-3">
                       <Label className="pl-3">
                         <Input type="checkbox" required />
-                        <a href="#" onClick={handleClick}>
+                        <a
+                          href="httsp://www.travelwealth.com/terms"
+                          onClick={handleClick}
+                        >
                           Agree to the Membership Terms of Service
                         </a>
                       </Label>
@@ -215,7 +219,7 @@ function Registration(props) {
         ) : (
           <Card className="w-75 bg-light loginCard">
             <CardBody>
-              <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
+              <StripeProvider apiKey={publicKey}>
                 <div className="example">
                   <h1 className="mb-2">Payment</h1>
                   <h4 className="mb-2">

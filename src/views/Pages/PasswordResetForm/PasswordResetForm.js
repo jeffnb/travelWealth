@@ -13,11 +13,10 @@ import {
   Row,
   Modal,
   ModalHeader,
-  ModalBody
+  ModalBody,
 } from "reactstrap"
 import pic from "../../../assets/img/brand/logo.svg"
 import axios from "axios"
-import { isEmail } from "validator"
 import { Link } from "react-router-dom"
 
 //{"name": "Mickey", "email": "mickey@disney.com", "phone": "1234567058"}
@@ -26,7 +25,7 @@ function ResetPassword(props) {
     if (!props.match.params.token) {
       props.history.push("/resetPassword")
     }
-  }, [props.match.params])
+  }, [props.match.params, props.history])
 
   const [password, setPassword] = useState("")
   const [passwordInvalid, setPasswordInvalid] = useState(false)
@@ -64,13 +63,13 @@ function ResetPassword(props) {
       axios
         .post("/password-reset/confirm/", {
           token: cleanup(props.match.params.token),
-          password
+          password,
         })
-        .then(resp => {
+        .then((resp) => {
           setModalText("Success! Your password has been reset.")
           toggle()
         })
-        .catch(e => {
+        .catch((e) => {
           setModalText("Uh Oh! There was an issue. Please try again later.")
           toggle()
         })
@@ -98,7 +97,7 @@ function ResetPassword(props) {
                   placeholder="Password must be at least 6 characters"
                   autoComplete="current-password"
                   value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   invalid={passwordInvalid}
                 />
                 <FormFeedback>
@@ -116,7 +115,7 @@ function ResetPassword(props) {
                   placeholder="Confirm Password"
                   autoComplete="current-password"
                   value={confPassword}
-                  onChange={e => setConfPassword(e.target.value)}
+                  onChange={(e) => setConfPassword(e.target.value)}
                   invalid={confPasswordInvalid}
                 />
                 <FormFeedback>
