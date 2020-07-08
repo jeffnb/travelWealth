@@ -46,8 +46,8 @@ function ManageWallet(props) {
     value: opt.id,
   }))
 
-  console.log("data", data)
-  console.log("data2", data2)
+  // console.log("data", data)
+  // console.log("data2", data2)
   // data = data.map(item => {
   //   if (item.type.includes('member')) {
   //     item.card_holder_name = item.user.first_name

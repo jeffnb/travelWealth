@@ -15,7 +15,7 @@ const initialState = {
         free_intl: false,
         annual_fee: "",
         name: "",
-        annual_notes: ""
+        annual_notes: "",
       },
       type: "",
       date_opened: "",
@@ -24,11 +24,11 @@ const initialState = {
         accountprofile: {
           member_524: [],
           companion_524: [],
-          companion_first_name: ""
-        }
-      }
-    }
-  ]
+          companion_first_name: "",
+        },
+      },
+    },
+  ],
 }
 
 // reducer (MUST BE DEFAULT EXPORT)
@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
     case GET_MY_CARDS:
       return {
         ...state,
-        cards: action.payload
+        cards: action.payload,
       }
     case ADD_MY_CARD:
       return {
@@ -45,7 +45,7 @@ export default (state = initialState, action) => {
         type: "",
         date_opened: "",
         card: "",
-        user: userId
+        user: userId,
       }
     default:
       return state
@@ -53,18 +53,19 @@ export default (state = initialState, action) => {
 }
 // action creators
 function getMyCards() {
-  return dispatch => {
+  return (dispatch) => {
     const accessToken = window.localStorage.getItem("token")
+    const userId = window.localStorage.getItem("userId")
     axios.defaults.headers.common["Authorization"] = "Token " + accessToken
     axios
       .get("card-accounts/?user_id=" + userId)
-      .then(resp => {
+      .then((resp) => {
         dispatch({
           type: GET_MY_CARDS,
-          payload: resp.data
+          payload: resp.data,
         })
       })
-      .catch(e => {
+      .catch((e) => {
         console.error("ERROR", e)
       })
   }
@@ -79,24 +80,24 @@ function addCard(type, date_opened, user, card, dispatch) {
       type: type,
       date_opened: date_opened,
       user: userId,
-      card: card
+      card: card,
     },
-    headers: { Authorization: "Token " + accessToken }
+    headers: { Authorization: "Token " + accessToken },
   })
-    .then(response => {
+    .then((response) => {
       return dispatch({
         type: ADD_MY_CARD,
-        payload: { type, date_opened, user, card }
+        payload: { type, date_opened, user, card },
       })
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("ERROR", error)
     })
 }
 
 export function useMyCards() {
   const dispatch = useDispatch()
-  const MyCards = useSelector(appState => appState.myCardsState.cards)
+  const MyCards = useSelector((appState) => appState.myCardsState.cards)
   const newCard = (type, date_opened, card, user) =>
     addCard(type, date_opened, user, card, dispatch)
 

@@ -27,7 +27,7 @@ const initialState = {
   is_staff: false,
   lastName: "",
   loading: false,
-  error: ""
+  error: "",
 }
 
 // reducer (MUST BE DEFAULT EXPORT)
@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
         username: action.payload.username,
         firstName: action.payload.firstName,
         is_staff: action.payload.is_staff,
-        lastName: action.payload.lastName
+        lastName: action.payload.lastName,
       }
     case LOGIN_FAILURE:
       return {
@@ -51,7 +51,7 @@ export default (state = initialState, action) => {
         loading: false,
         isAuthenticated: false,
         username: "",
-        error: action.payload
+        error: action.payload,
       }
     case LOGOUT:
       return initialState
@@ -66,7 +66,7 @@ function login(username, password, dispatch) {
   return new Promise((resolve, reject) => {
     axios
       .post("/api-token-auth/", { username, password })
-      .then(resp => {
+      .then((resp) => {
         const token = resp.data.token
         const userId = resp.data.user_id
         const firstName = resp.data.first_name
@@ -77,23 +77,23 @@ function login(username, password, dispatch) {
         window.localStorage.setItem("firstName", firstName)
         window.localStorage.setItem("lastName", lastName)
         window.localStorage.setItem("is_staff", is_staff)
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
+        axios.defaults.headers.common["Authorization"] = `Token ${token}`
         dispatch({
           type: LOGIN_SUCCESS,
           payload: {
             username,
             firstName,
             lastName,
-            is_staff
-          }
+            is_staff,
+          },
         })
         resolve()
       })
-      .catch(e => {
+      .catch((e) => {
         window.localStorage.removeItem("token")
         dispatch({
           type: LOGIN_FAILURE,
-          payload: e.message
+          payload: e.message,
         })
         reject(e)
       })
@@ -115,15 +115,15 @@ function logout() {
 export function useAuth() {
   const dispatch = useDispatch()
   const isAuthenticated = useSelector(
-    appState => appState.authState.isAuthenticated
+    (appState) => appState.authState.isAuthenticated
   )
-  const username = useSelector(appState => appState.authState.username)
-  const userId = useSelector(appState => appState.authState.userId)
-  const firstName = useSelector(appState => appState.authState.firstName)
-  const lastName = useSelector(appState => appState.authState.lastName)
-  const is_staff = useSelector(appState => appState.authState.is_staff)
-  const loading = useSelector(appState => appState.authState.loading)
-  const error = useSelector(appState => appState.authState.error)
+  const username = useSelector((appState) => appState.authState.username)
+  const userId = useSelector((appState) => appState.authState.userId)
+  const firstName = useSelector((appState) => appState.authState.firstName)
+  const lastName = useSelector((appState) => appState.authState.lastName)
+  const is_staff = useSelector((appState) => appState.authState.is_staff)
+  const loading = useSelector((appState) => appState.authState.loading)
+  const error = useSelector((appState) => appState.authState.error)
   const signin = (username, password) => login(username, password, dispatch)
   const signout = () => dispatch(logout())
 
@@ -137,6 +137,6 @@ export function useAuth() {
     userId,
     firstName,
     lastName,
-    is_staff
+    is_staff,
   }
 }
