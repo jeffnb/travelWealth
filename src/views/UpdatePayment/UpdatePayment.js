@@ -34,7 +34,7 @@ const UpdatePayment = injectStripe((props) => {
       } else {
         const accessToken = window.localStorage.getItem("token")
         axios.defaults.headers.common["Authorization"] = "Token " + accessToken
-        let response = await axios.post("/accounts/update-card", {
+        let response = await axios.post("/accounts/update-card/", {
           token: token.token.id,
         })
 
