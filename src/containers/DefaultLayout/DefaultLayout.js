@@ -1,7 +1,7 @@
-import React, { Suspense } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
-import * as router from "react-router-dom";
-import { Container } from "reactstrap";
+import React, { Suspense } from "react"
+import { Redirect, Route, Switch } from "react-router-dom"
+import * as router from "react-router-dom"
+import { Container } from "reactstrap"
 
 import {
   AppAside,
@@ -11,30 +11,31 @@ import {
   AppSidebarForm,
   AppSidebarHeader,
   AppSidebarMinimizer,
-  AppSidebarNav2 as AppSidebarNav
-} from "@coreui/react";
+  AppSidebarNav2 as AppSidebarNav,
+} from "@coreui/react"
 // sidebar nav config
-import navigation from "../../_nav";
+import navigation from "../../_nav"
 // routes config
-import routes from "../../routes";
+import routes from "../../routes"
+import UpdatePayment from "../../views/UpdatePayment"
 
-const DefaultAside = React.lazy(() => import("./DefaultAside"));
-const DefaultHeader = React.lazy(() => import("./DefaultHeader"));
+const DefaultAside = React.lazy(() => import("./DefaultAside"))
+const DefaultHeader = React.lazy(() => import("./DefaultHeader"))
 
 function DefaultLayout(props) {
   function loading() {
-    return <></>;
+    return <></>
   }
 
   function signOut(e) {
-    e.preventDefault();
-    props.history.push("/login");
+    e.preventDefault()
+    props.history.push("/login")
   }
   return (
     <div className="app">
       <AppHeader fixed className="bg-light text-primary">
         <Suspense fallback={loading()}>
-          <DefaultHeader onLogout={e => signOut(e)} />
+          <DefaultHeader onLogout={(e) => signOut(e)} />
         </Suspense>
       </AppHeader>
       <div className="app-body bg-light">
@@ -63,10 +64,11 @@ function DefaultLayout(props) {
                       path={route.path}
                       exact={route.exact}
                       name={route.name}
-                      render={props => <route.component {...props} />}
+                      render={(props) => <route.component {...props} />}
                     />
-                  ) : null;
+                  ) : null
                 })}
+                <Route path="/updatePayment" component={UpdatePayment} />
                 <Redirect from="/" to="/wallet" />
               </Switch>
             </Suspense>
@@ -79,7 +81,7 @@ function DefaultLayout(props) {
         </AppAside>
       </div>
     </div>
-  );
+  )
 }
 
-export default DefaultLayout;
+export default DefaultLayout

@@ -1,24 +1,24 @@
-import React, { Component } from "react";
-import { CardElement, injectStripe } from "react-stripe-elements";
-import axios from "axios";
+import React, { Component } from "react"
+import { CardElement, injectStripe } from "react-stripe-elements"
+import axios from "axios"
 
 class CheckoutForm extends Component {
   constructor(props) {
-    super(props);
-    this.submit = this.submit.bind(this);
+    super(props)
+    this.submit = this.submit.bind(this)
     this.state = {
-      error: ""
-    };
+      error: "",
+    }
   }
 
   async submit(ev) {
     if (this.props.stripe) {
-      let token = await this.props.stripe.createToken();
+      let token = await this.props.stripe.createToken()
       if (token.error) {
         this.setState({
-          error: token.error.message
-        });
-        return;
+          error: token.error.message,
+        })
+        return
       } else {
         let response = await axios({
           url: "/account-registration/",
@@ -28,14 +28,14 @@ class CheckoutForm extends Component {
             email: this.props.email,
             first_name: this.props.firstname,
             last_name: this.props.lastname,
-            password: this.props.password
-          }
-        });
+            password: this.props.password,
+          },
+        })
         if (response.status === 200) {
           this.setState({
             success:
-              "congrats! Your Payment was accepted, Welcome to TravelWealth"
-          });
+              "Congrats! Your Payment was accepted, Welcome to TravelWealth",
+          })
         }
       }
     }
@@ -51,8 +51,8 @@ class CheckoutForm extends Component {
           <div className="text-success mt-2">{this.state.success}</div>
         </div>
       </>
-    );
+    )
   }
 }
 
-export default injectStripe(CheckoutForm);
+export default injectStripe(CheckoutForm)

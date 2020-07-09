@@ -1,30 +1,30 @@
-import React from "react";
+import React from "react"
 import {
   UncontrolledDropdown,
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
   Nav,
-  NavItem
-} from "reactstrap";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { AppNavbarBrand, AppSidebarToggler } from "@coreui/react";
-import logo from "../../assets/img/brand/logo.svg";
-import sygnet from "../../assets/img/brand/logo.svg";
-import { useAuth } from "../../hooks";
+  NavItem,
+} from "reactstrap"
+import PropTypes from "prop-types"
+import { Link } from "react-router-dom"
+import { AppNavbarBrand, AppSidebarToggler } from "@coreui/react"
+import logo from "../../assets/img/brand/logo.svg"
+import sygnet from "../../assets/img/brand/logo.svg"
+import { useAuth } from "../../hooks"
 
 const propTypes = {
-  children: PropTypes.node
-};
+  children: PropTypes.node,
+}
 
-const defaultProps = {};
+const defaultProps = {}
 
 function DefaultHeader(props) {
   // eslint-disable-next-line
-  const { children, ...attributes } = props;
-  const { signout, is_staff } = useAuth();
-  const firstName = localStorage.firstName;
+  const { children, ...attributes } = props
+  const { signout, is_staff } = useAuth()
+  const firstName = localStorage.firstName
 
   return (
     <React.Fragment>
@@ -35,7 +35,7 @@ function DefaultHeader(props) {
           src: sygnet,
           width: 60,
           height: 60,
-          alt: "TravelWealth Logo"
+          alt: "TravelWealth Logo",
         }}
       />
       <AppSidebarToggler className="d-md-down-none" display="lg" />
@@ -82,6 +82,12 @@ function DefaultHeader(props) {
             >
               <strong>Account</strong>
             </DropdownItem>
+            <DropdownItem>
+              <Link to="/updatePayment" className="nav-link">
+                <i className="fa fa-credit-card" />
+                Update Payment
+              </Link>
+            </DropdownItem>
             <DropdownItem className="text-primary">
               <Link to="/resetPassword" className="nav-link">
                 <i className="fas fa-user-lock"></i> Reset Password
@@ -94,10 +100,10 @@ function DefaultHeader(props) {
         </UncontrolledDropdown>
       </Nav>
     </React.Fragment>
-  );
+  )
 }
 
-DefaultHeader.propTypes = propTypes;
-DefaultHeader.defaultProps = defaultProps;
+DefaultHeader.propTypes = propTypes
+DefaultHeader.defaultProps = defaultProps
 
-export default DefaultHeader;
+export default DefaultHeader
