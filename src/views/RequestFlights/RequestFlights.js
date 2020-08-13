@@ -156,6 +156,7 @@ function RequestFlights(props) {
                             id="roundTrip"
                             name="routing"
                             value="roundTrip"
+                            checked
                           />
                           <Label
                             check
