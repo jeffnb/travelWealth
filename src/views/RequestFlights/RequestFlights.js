@@ -15,7 +15,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter
+  ModalFooter,
 } from "reactstrap"
 import { useFlights } from "../../hooks"
 
@@ -147,14 +147,14 @@ function RequestFlights(props) {
                         check
                         className="radio"
                         value={routing}
-                        onChange={e => setRouting(e.target.value)}
+                        onChange={(e) => setRouting(e.target.value)}
                       >
                         <Row>
                           <Input
                             className="form-check-input"
                             type="radio"
                             id="roundTrip"
-                            name="roundTrip"
+                            name="routing"
                             value="roundTrip"
                           />
                           <Label
@@ -170,7 +170,7 @@ function RequestFlights(props) {
                             className="form-check-input"
                             type="radio"
                             id="oneWay"
-                            name="oneWay"
+                            name="routing"
                             value="oneWay"
                           />
                           <Label
@@ -186,7 +186,7 @@ function RequestFlights(props) {
                             className="form-check-input"
                             type="radio"
                             id="multiCity"
-                            name="multiCity"
+                            name="routing"
                             value="multiCity"
                           />
                           <Label
@@ -206,7 +206,7 @@ function RequestFlights(props) {
                 <Col xs="12" md="6">
                   <FormGroup
                     value={departCity}
-                    onChange={e => setdepartCity(e.target.value)}
+                    onChange={(e) => setdepartCity(e.target.value)}
                   >
                     <Label htmlFor="depart">Departure City</Label>
                     <Input
@@ -220,7 +220,7 @@ function RequestFlights(props) {
                 <Col xs="12" md="6">
                   <FormGroup
                     value={destinations}
-                    onChange={e => setDestinations(e.target.value)}
+                    onChange={(e) => setDestinations(e.target.value)}
                   >
                     <Label htmlFor="destinations">Destination(s)</Label>
                     <Input
@@ -237,7 +237,7 @@ function RequestFlights(props) {
                   <FormGroup
                     row
                     value={departDate}
-                    onChange={e => setdepartDate(e.target.value)}
+                    onChange={(e) => setdepartDate(e.target.value)}
                   >
                     <Col>
                       <Label htmlFor="depart-input">Departure Date</Label>
@@ -267,7 +267,7 @@ function RequestFlights(props) {
                         type="text"
                         id="howFlexible"
                         value={howFlexible}
-                        onChange={e => setHowFlexible(e.target.value)}
+                        onChange={(e) => setHowFlexible(e.target.value)}
                         invalid={howFlexibleInvalid}
                       />
                       <FormFeedback>How flexible is Required</FormFeedback>
@@ -280,7 +280,7 @@ function RequestFlights(props) {
                   <FormGroup
                     row
                     value={returnDate}
-                    onChange={e => setreturnDate(e.target.value)}
+                    onChange={(e) => setreturnDate(e.target.value)}
                   >
                     <Col>
                       <Label htmlFor="return-input">Return Date</Label>
@@ -300,7 +300,7 @@ function RequestFlights(props) {
                 <Col xs="12" md="6">
                   <FormGroup
                     value={preferred}
-                    onChange={e => setPreffered(e.target.value)}
+                    onChange={(e) => setPreffered(e.target.value)}
                   >
                     <Label htmlFor="preferredClass">Preferred Class</Label>
                     <Input
@@ -317,7 +317,7 @@ function RequestFlights(props) {
                 <Col xs="12" md="6">
                   <FormGroup
                     value={passengers}
-                    onChange={e => setPassengers(e.target.value)}
+                    onChange={(e) => setPassengers(e.target.value)}
                   >
                     <Label htmlFor="passengers">How Many Passengers?</Label>
                     <Input
@@ -335,7 +335,7 @@ function RequestFlights(props) {
                 <Col xs="12" md="6">
                   <FormGroup
                     value={passNames}
-                    onChange={e => setpassNames(e.target.value)}
+                    onChange={(e) => setpassNames(e.target.value)}
                   >
                     <Label htmlFor="passengerNames">Passenger Name(s)</Label>
                     <Input
@@ -349,7 +349,7 @@ function RequestFlights(props) {
                 <Col xs="12" md="6">
                   <FormGroup
                     value={bags}
-                    onChange={e => setBags(e.target.value)}
+                    onChange={(e) => setBags(e.target.value)}
                   >
                     <Label htmlFor="bags">
                       How many total bags will you be checking?
@@ -370,7 +370,7 @@ function RequestFlights(props) {
                   <FormGroup
                     row
                     value={notes}
-                    onChange={e => setNotes(e.target.value)}
+                    onChange={(e) => setNotes(e.target.value)}
                   >
                     <Col>
                       <Label htmlFor="notes">Notes/Instructions</Label>
@@ -401,7 +401,7 @@ function RequestFlights(props) {
         <ModalHeader>Modal title</ModalHeader>
         <ModalBody>{modaltext}</ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={e => props.history.push("/")}>
+          <Button color="primary" onClick={(e) => props.history.push("/")}>
             Back to Home
           </Button>{" "}
         </ModalFooter>
