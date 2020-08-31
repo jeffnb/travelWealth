@@ -62,14 +62,14 @@ function LoginForm(props) {
                 </InputGroupAddon>
                 <Input
                   type="text"
-                  placeholder="Username"
+                  placeholder="Email"
                   autoComplete="email"
                   value={username}
                   onChange={e => setUsername(e.target.value)}
                   invalid={usernameInvalid}
                 />
                 <FormFeedback invalid={usernameInvalid}>
-                  The Username/Password You entered doesn't match our records.
+                  The Email/Password You entered doesn't match our records.
                 </FormFeedback>
               </InputGroup>
               <InputGroup className="mb-5">
@@ -87,7 +87,7 @@ function LoginForm(props) {
                   invalid={passwordInvalid}
                 />
                 <FormFeedback invalid={passwordInvalid}>
-                  The Username/Password You entered doesn't match our records.
+                  The Email/Password You entered doesn't match our records.
                 </FormFeedback>
               </InputGroup>
               <Row>
