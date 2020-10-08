@@ -14,18 +14,6 @@ export default {
       icon: "far fa-credit-card"
     },
     {
-      name: "Request Travel",
-      url: "/wallet",
-      icon: "fas fa-globe-americas",
-      children: [
-        {
-          name: " • Request a Flight",
-          url: "/request-flights",
-          class: "mt-auto"
-        }
-      ]
-    },
-    {
       name: "Classroom",
       url: "/classroom",
       icon: "fas fa-chalkboard-teacher"
