@@ -54,7 +54,7 @@ const UpdatePayment = injectStripe((props) => {
         <CardBody>
           <CardElement />
           <Button style={{ marginTop: 20 }} onClick={submit}>
-            Update Payment Menthod
+            Update Payment Method
           </Button>
           <div className="text-danger mt-2">{err}</div>
           <div className="text-success mt-2">{success}</div>
